@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    
+    <Menu></Menu>
     <v-row >
       <v-img src="../assets/7848.jpg"  height="400" width="1300" aspect-ratio="0.1">
       
@@ -81,11 +81,12 @@
 <script>
 // @ is an alias to /src
 //import HelloWorld from '@/components/HelloWorld.vue'
+import Menu from '../components/Menu';
 
 export default {
   name: 'Home',
-  components: {
-    ///HelloWorld
-  }
+  components:{
+        Menu,
+    },
 }
 </script>

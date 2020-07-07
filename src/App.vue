@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <Menu></Menu>
+    
     <v-content class="pa-0">
       <router-view/>
     </v-content>
@@ -10,7 +10,6 @@
 
 <script>
 //import HelloWorld from './components/HelloWorld';
-import Menu from '@/components/Menu';
 import Footer from '@/components/Footer';
 
 export default {
@@ -18,7 +17,6 @@ export default {
 
   components: {
     //HelloWorld,
-    Menu,
     Footer
   },
 

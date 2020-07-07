@@ -1,5 +1,6 @@
 <template>
         <v-container fluid >
+            <Menu></Menu>
             <v-row style="height:90px;"></v-row>
             <v-img src="../assets/bg_login.jpg"  contain height="550" aspect-ratio="0.1" >
             <v-row class="bg" justify="center" style="height:550px;">
@@ -22,7 +23,11 @@
 </template>
 
 <script>
+import Menu from '../components/Menu';
 export default {
-    name: 'Login'
+    name: 'Login',
+    components:{
+        Menu,
+    },
 }
 </script>

@@ -1,5 +1,7 @@
 <template>
+
     <v-container fluid>
+        <Menu></Menu>
         <v-row style="height:90px;">
             
         </v-row>
@@ -73,9 +75,13 @@
 
 <script>
 import {mapState} from 'vuex';
+import Menu from '../components/Menu';
+
 export default {
     name: 'Registro',
-    
+    components:{
+        Menu,
+    },
     data () {
       return {
         tab: null,

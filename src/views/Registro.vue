@@ -1,6 +1,8 @@
 <template>
     <v-container fluid>
+      <Menu></Menu>
          <v-row style="height:90px;"></v-row>
+         <v-img src="../assets/bg_reg.jpg"  contain height="850" aspect-ratio="0.1" >
          <v-row justify="center" >
            <v-col  xs="12" sm="8" md="8" lg="8">
              <v-card class="pa-3">
@@ -8,7 +10,7 @@
                  <v-row >
                    <v-col cols="12" >
                      <h2 align="center" class="mb-8" style="font-family: 'Yantramanav', sans-serif; color: #720d2c"> Registrar nueva cuenta</h2>
-                    <v-img src="../assets/users.png"  contain height="80" aspect-ratio="0.1" ></v-img>
+                    <v-img src="../assets/reg.png"  contain height="120" aspect-ratio="0.1" ></v-img>
                    </v-col>
                  </v-row>
                  <v-row class="mt-6" >
@@ -48,24 +50,33 @@
                       <small :class="color2">{{msn2}}</small>
                     </v-col>
                   </v-row>
-                  
+                  <p class="mb-10"></p>
+                  <v-btn block color="#9D2C4E" dark class="mb-8">Registrarse</v-btn>
                </v-form>
              </v-card>
            </v-col>
          </v-row>
+        </v-img>
     </v-container>
 </template>
 
 <script>
+import Menu from '../components/Menu';
+
 export default {
     name: 'Registro',
+    components:{
+        Menu,
+    },
     data () {
       return {
         distritos: ['Alto Selva Alegre', 'Cayma', 'Cerro Colorado', 'Hunter',
         'José Luis Bustamante y Rivero', 'Miraflores', 'Mariano Melgar',
         'Paucarpata', 'Socabaya', 'Vítor', 'Yanahuara'],
         pass:'',
-        msn: ''
+        pass2: '',
+        msn: '',
+        msn2: ''
       }
     },
     computed: {
@@ -77,9 +88,9 @@ export default {
         }
       },
       comprobarIgualdad(){
-        if(this.pass2 == this.pass){
+        if(this.pass2>0 && this.pass2 == this.pass){
           this.msn2='Contraseña válida'
-        } else {
+        } else if(this.pass2 != this.pass) {
           this.msn2='Las contraseñas no coinciden'
         }
       },
