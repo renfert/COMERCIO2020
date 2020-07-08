@@ -1,6 +1,7 @@
 <template>
   <v-app>
-    
+    <Menu v-if="nav1" :user="u" ></Menu> 
+    <MenuEmp v-if="!nav1"></MenuEmp>
     <v-content class="pa-0">
       <router-view/>
     </v-content>
@@ -11,17 +12,35 @@
 <script>
 //import HelloWorld from './components/HelloWorld';
 import Footer from '@/components/Footer';
+import Menu from '@/components/Menu';
+import MenuEmp from '@/components/MenuEmp';
 
 export default {
   name: 'App',
 
   components: {
     //HelloWorld,
-    Footer
+    Footer,
+    Menu,
+    MenuEmp
   },
 
   data: () => ({
-    //
+    u:2,
+    mostrar: true,
+    nav1:true,
   }),
+  methods: {
+    mostrar_menu(user){
+      if(user!=0 && user!=1){
+        this.nav1=false;
+      } else{
+        this.nav1=true;
+      }
+    }
+  },
+  created() {
+    this.mostrar_menu(this.u)
+  },
 };
 </script>

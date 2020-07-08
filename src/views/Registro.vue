@@ -1,6 +1,6 @@
 <template>
     <v-container fluid>
-      <Menu></Menu>
+     <!--  <Menu></Menu> -->
          <v-row style="height:90px;"></v-row>
          <v-img src="../assets/bg_reg.jpg"  contain height="850" aspect-ratio="0.1" >
          <v-row justify="center" >

@@ -1,7 +1,7 @@
 <template>
 
     <v-container fluid>
-        <Menu></Menu>
+    <!--    <Menu></Menu>-->
         <v-row style="height:90px;">
             
         </v-row>
