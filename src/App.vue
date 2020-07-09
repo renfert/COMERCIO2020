@@ -5,7 +5,7 @@
     <v-content class="pa-0">
       <router-view/>
     </v-content>
-    <Footer class="pa-0"></Footer>
+    <Footer class="pa-0" ></Footer>
   </v-app>
 </template>
 

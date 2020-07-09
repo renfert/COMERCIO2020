@@ -45,8 +45,7 @@
           </v-row>
       </v-col>
     </v-row>
-
-    <v-row class="pa-5 ml-5 mr-5">
+        <v-row class="pa-5 ml-5 mr-5">
       <v-col  sm="12" xs="12" md="4" align="center" >
         <v-banner single-line>
           <h1 style="font-family: 'Charm', cursive;" class="secondary--text"> Visión </h1>
@@ -78,6 +77,8 @@
 
 <script>
 export default {
-    name: 'Inicio'
+    name: 'Inicio',
+    components:{
+    }
 }
 </script>

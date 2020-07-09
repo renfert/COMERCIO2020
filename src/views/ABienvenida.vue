@@ -1,53 +1,16 @@
 <template>
-    <v-container>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit voluptatum deleniti 
-        inventore cupiditate ipsa similique. Nam ducimus voluptate quas tenetur, 
-        laudantium dolores eligendi expedita et quae, quaerat aspernatur reprehenderit enim!
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit voluptatum deleniti 
-        inventore cupiditate ipsa similique. Nam ducimus voluptate quas tenetur, 
-        laudantium dolores eligendi expedita et quae, quaerat aspernatur reprehenderit enim!
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit voluptatum deleniti 
-        inventore cupiditate ipsa similique. Nam ducimus voluptate quas tenetur, 
-        laudantium dolores eligendi expedita et quae, quaerat aspernatur reprehenderit enim!
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit voluptatum deleniti 
-        inventore cupiditate ipsa similique. Nam ducimus voluptate quas tenetur, 
-        laudantium dolores eligendi expedita et quae, quaerat aspernatur reprehenderit enim!
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit voluptatum deleniti 
-        inventore cupiditate ipsa similique. Nam ducimus voluptate quas tenetur, 
-        laudantium dolores eligendi expedita et quae, quaerat aspernatur reprehenderit enim!
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit voluptatum deleniti 
-        inventore cupiditate ipsa similique. Nam ducimus voluptate quas tenetur, 
-        laudantium dolores eligendi expedita et quae, quaerat aspernatur reprehenderit enim!
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit voluptatum deleniti 
-        inventore cupiditate ipsa similique. Nam ducimus voluptate quas tenetur, 
-        laudantium dolores eligendi expedita et quae, quaerat aspernatur reprehenderit enim!
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit voluptatum deleniti 
-        inventore cupiditate ipsa similique. Nam ducimus voluptate quas tenetur, 
-        laudantium dolores eligendi expedita et quae, quaerat aspernatur reprehenderit enim!
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit voluptatum deleniti 
-        inventore cupiditate ipsa similique. Nam ducimus voluptate quas tenetur, 
-        laudantium dolores eligendi expedita et quae, quaerat aspernatur reprehenderit enim!
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit voluptatum deleniti 
-        inventore cupiditate ipsa similique. Nam ducimus voluptate quas tenetur, 
-        laudantium dolores eligendi expedita et quae, quaerat aspernatur reprehenderit enim!
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit voluptatum deleniti 
-        inventore cupiditate ipsa similique. Nam ducimus voluptate quas tenetur, 
-        laudantium dolores eligendi expedita et quae, quaerat aspernatur reprehenderit enim!
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit voluptatum deleniti 
-        inventore cupiditate ipsa similique. Nam ducimus voluptate quas tenetur, 
-        laudantium dolores eligendi expedita et quae, quaerat aspernatur reprehenderit enim!
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit voluptatum deleniti 
-        inventore cupiditate ipsa similique. Nam ducimus voluptate quas tenetur, 
-        laudantium dolores eligendi expedita et quae, quaerat aspernatur reprehenderit enim!
-        
+    <v-container fluid class="pa-0">
+        <v-parallax height="340" src="../assets/portada.jpg"></v-parallax>
+        <Mision class="ml-2"></Mision>
     </v-container>
 </template>
 
 <script>
-
+import Mision from '../components/Mision';
 export default {
     name: 'ABienvenida',
     components:{
+        Mision
     },
 }
 </script>

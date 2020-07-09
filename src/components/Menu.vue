@@ -44,8 +44,8 @@ export default {
             cliente: [
                 {enlace: '/', icono: 'mdi-home', texto:'Inicio'},
                 {enlace: '/ccarta', icono: 'mdi-silverware-fork-knife', texto:'Carta'},
-                {enlace: '/cpedidos', icono: 'mdi-account', texto:'Mis Pedidos'},
-                {enlace: '/', icono: 'mdi-account-plus', texto:'Cerrar Sesión'},
+                {enlace: '/cpedidos', icono: 'mdi-cart', texto:'Mis Pedidos'},
+                {enlace: '/', icono: 'mdi-logout', texto:'Cerrar Sesión'},
             ],
         }
     },
