@@ -19,7 +19,7 @@ export default new Vuex.Store({
       {id: 1, nombre: 'Lomo Saltado', descr: 'Carne de res, arroz cocido, cebolla, tomate, perejil y papas fritas.', img: '"../assets/1.jpg"', cat:2}
     ],
     entrada: [
-      {id:3, nombre:'Queso frito', descr:'Queso blanco salado crujiente.', img:'', cat:1},
+      {id:3, nombre:'Queso', descr:'Queso blanco salado crujiente.', img:'', cat:1},
       {id:3, nombre:'Queso frito', descr:'Queso blanco salado crujiente.', img:'', cat:1},
       {id:3, nombre:'Queso frito', descr:'Queso blanco salado crujiente.', img:'', cat:1},
       {id:3, nombre:'Queso frito', descr:'Queso blanco salado crujiente.', img:'', cat:1},
