@@ -6,8 +6,11 @@
         <v-row class="ml-16">
             <v-col cols="6">
                 <v-toolbar dense floating class="ml-12">
-                    <v-text-field hide-details  single-line label="Buscar plato" v-model="nombrePlato">
+                    <v-text-field hide-details  single-line label="Buscar plato" v-model="nombrePlato" @click="hidden = !hidden" @keyup.enter="buscarPlato(nombrePlato)">
                     </v-text-field>
+                    <v-btn icon v-show="hidden" @click="clear">
+                        <v-icon>mdi-file-excel-box</v-icon>
+                    </v-btn>
                     <v-btn icon @click="buscarPlato(nombrePlato)">
                         <v-icon>mdi-magnify</v-icon>
                     </v-btn>
@@ -94,6 +97,10 @@ export default {
                 this.platos=this.found
             }
             
+        },
+        clear(){
+            this.nombrePlato = '',
+            this.listaComidas()
         }
     },
     created(){
