@@ -40,6 +40,31 @@ Vue.use(VueRouter)
     name: 'ABienvenida',
     component: () => import('../views/ABienvenida.vue')
   },
+  {
+    path: '/aplatos',
+    name: 'APlatos',
+    component: () => import('../views/APlatos.vue')
+  },
+  {
+    path: '/acarta',
+    name: 'ACarta',
+    component: () => import('../views/ACarta.vue')
+  },
+  {
+    path: '/apedidos',
+    name: 'APedidos',
+    component: () => import('../views/APedidos.vue')
+  },
+  {
+    path: '/arecepcionistas',
+    name: 'ARecepcionistas',
+    component: () => import('../views/ARecepcionistas.vue')
+  },
+  {
+    path: '/arepartidores',
+    name: 'ARepartidores',
+    component: () => import('../views/ARepartidores.vue')
+  },
 
   
 ]

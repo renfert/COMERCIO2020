@@ -86,8 +86,8 @@ export default {
       return {
         tab: null,
         text: '',
-        platos: [{id:'', nombre: '', descr: '', img: ''}],
-        menu_segundos: [{id:'', nombre: '', descr: '', img: ''}],
+        platos: [{id:'', nombre: '', descr: '', img: '', cat:''}],
+        menu_segundos: [{id:'', nombre: '', descr: '', img: '', cat:''}],
         entradas: '',
         segundos: ''
       }

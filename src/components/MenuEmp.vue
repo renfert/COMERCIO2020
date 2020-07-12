@@ -51,11 +51,11 @@ export default {
             drawer: true,
             items: [
             { title: 'Inicio', icon: 'mdi-home', enlace:'/abienvenida' },
-            { title: 'Platos', icon: 'mdi-silverware-fork-knife', enlace:'/' },
-            { title: 'Carta', icon: 'mdi-view-list', enlace:'/' },
-            { title: 'Pedidos', icon: 'mdi-ballot', enlace:'/' },
-            { title: 'Recepcionistas', icon: 'mdi-account-details', enlace:'/' },
-            { title: 'Repartidores', icon: 'mdi-motorbike', enlace:'/' },
+            { title: 'Platos', icon: 'mdi-silverware-fork-knife', enlace:'/aplatos' },
+            { title: 'Carta', icon: 'mdi-view-list', enlace:'/acarta' },
+            { title: 'Pedidos', icon: 'mdi-ballot', enlace:'/apedidos' },
+            { title: 'Recepcionistas', icon: 'mdi-account-details', enlace:'/arecepcionistas' },
+            { title: 'Repartidores', icon: 'mdi-motorbike', enlace:'/arepartidores' },
             
             ],
             permanent: true,

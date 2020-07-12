@@ -18,7 +18,8 @@ export default new Vuetify({
         info: '#2196F3',
         success: '#4CAF50',
         warning: '#FFC107',
-        sec: '#969696'
+        sec: '#969696',
+        totext: '#3a0414'
       },
     },
   },
