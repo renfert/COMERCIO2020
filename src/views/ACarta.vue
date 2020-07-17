@@ -1,6 +1,8 @@
 <template>
-    <v-container >
-        <h1  class=" secondary--text mt-8 ml-8" align="center" >Gestión de la Carta</h1>
+    <v-container fluid class="pa-0">
+        <h1  class=" secondary--text mt-8 ml-8" align="center" >Gestión de la Carta
+        <v-img src="../assets/plato2.png" height="50" contain></v-img> </h1>
+        <p></p>
         <v-divider></v-divider>
         <v-row class="mt-12">
             <v-col cols="6">
