@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from "axios"
 
 Vue.use(Vuex)
 
@@ -25,11 +26,29 @@ export default new Vuex.Store({
       {id:3, nombre:'Queso frito', descr:'Queso blanco salado crujiente.', img:'', cat:1},
       {id:3, nombre:'Queso frito', descr:'Queso blanco salado crujiente.', img:'', cat:1},
       {id:3, nombre:'Queso frito', descr:'Queso blanco salado crujiente.', img:'', cat:1},
-    ]
+    ],
+
+    //USERS
+    user: [], 
+    rol: '',
+    u: 0
   },
   mutations: {
+    asig_rol(state, asig){
+      state.rol=asig
+    },
+    asign_u(state, r){
+      if(r=="ROLE_CLIEN"){
+        state.u=1
+      }else{
+        state.u=2
+      }
+      
+    }
   },
   actions: {
+    
+   
   },
   modules: {
   }

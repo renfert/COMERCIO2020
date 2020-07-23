@@ -149,8 +149,6 @@ export default {
                 this.found = this.platos.filter(plato => plato.nombre.toUpperCase()== nombrePlato.toUpperCase()),
                 this.platos=this.found
             }
-            
-            
         },
         eliminar(id){
             this.platos = this.platos.filter(e => e.id !=id)

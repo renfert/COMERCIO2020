@@ -6,11 +6,58 @@
         
         <p></p>
         <v-divider></v-divider>
+        <v-row class="ml-12 mb-4">
+            <v-btn @click="obtenerUser">dsfghh</v-btn>
+            <v-btn @click="obtenerCat">dsfghh</v-btn>
+            <v-btn @click="obtenerPlatos">dsfghh</v-btn>
+        </v-row>
+        
     </v-container>
 </template>
 
 <script>
+import {mapSate, mapMutations, mapState} from 'vuex';
+import axios from "axios";
 export default {
-    name: 'APedidos'
+    name: 'APedidos',
+    computed: {
+    },
+    methods: {
+       // ...mapMutations(['obtenerUser'])
+       async obtenerUser(){
+           try{
+               
+               const usersDB = await this.axios.get('v1/rol');
+               console.log(usersDB);
+           }catch(error){
+               console.log(error);
+           }
+       },
+
+        async obtenerCat(){
+           try{
+               console.info("headers",this.axios.defaults.headers)
+               const usersDB = await this.axios.get('v1/personal');
+               console.log(usersDB);
+           }catch(error){
+               console.log(error);
+           }
+       },
+
+        async obtenerPlatos(){
+           try{
+               
+               const usersDB = await this.axios.get('v1/plate');
+               console.log(usersDB);
+           }catch(error){
+               console.log(error);
+           }
+       }
+    },
+
+    
+    created() {
+        
+    },
 }
 </script>
