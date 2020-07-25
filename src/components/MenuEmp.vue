@@ -6,16 +6,16 @@
                 <v-list dense nav class="py-0">
                     <v-list-item two-line :class="miniVariant && 'px-0'" link>
                         <v-list-item-avatar>
-                            <img src="https://randomuser.me/api/portraits/men/81.jpg" alt="">
+                            <img :src="foto" alt="">
                         </v-list-item-avatar>
 
                         <v-list-item-content>
-                            <v-list-item-title>{{nombreAdmin}}</v-list-item-title>
+                            <v-list-item-title>{{nombreEmp}}</v-list-item-title>
                             <v-list-item-subtitle>{{rol}}</v-list-item-subtitle>
                             
                         </v-list-item-content>
                     </v-list-item>
-                    <v-list-item link class="mb-5">
+                    <v-list-item link class="mb-5" @click="cerrar_sesion">
                         <v-list-item-icon>
                             <v-icon>mdi-power</v-icon>
                         </v-list-item-icon>
@@ -55,6 +55,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
     name: 'MenuEmp',
     
@@ -88,9 +89,10 @@ export default {
             miniVariant: true,
             expandOnHover: true,
             //Datos Usuario
-            nombreAdmin: 'Nombre Admin',
+            nombreEmp: '',
             rol: '',
             nuevos: false,
+            foto: ''
         }
     },
     methods: {
@@ -100,19 +102,38 @@ export default {
                 this.items = this.admin
                 this.rol="Administrador"
                 this.nuevos=false
+                this.foto="https://randomuser.me/api/portraits/men/81.jpg"
             } else if(n==3){
                 this.items = this.rec
                 this.rol="Recepcionista"
                 this.nuevos=true
+                this.foto="https://randomuser.me/api/portraits/women/17.jpg"
             } else if(n==4){
                 this.items = this.rep
                 this.rol="Repartidor"
                 this.nuevos=true
+                this.foto="https://randomuser.me/api/portraits/men/22.jpg"
             }
+        },
+        async obtenerNombre(){
+           try{
+               const nombre_e = await this.axios.get('v1/personal');
+               this.nombreEmp=nombre_e.data.name+' '+nombre_e.data.lasname
+
+           }catch(error){
+               console.log(error);
+           }
+        },
+        cerrar_sesion(){
+            localStorage.setItem("token",null)
+            localStorage.setItem("u",0)
+            this.$router.push('/')
+            
         }
     },
     created() {
-        this.tipo(this.user)
+        this.tipo(this.user),
+        this.obtenerNombre()
     },
 }
 </script>

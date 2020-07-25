@@ -75,7 +75,6 @@
 
 <script>
 import {mapState} from 'vuex';
-import Menu from '../components/Menu';
 
 export default {
     name: 'Registro',

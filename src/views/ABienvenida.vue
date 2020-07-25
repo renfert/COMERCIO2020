@@ -2,13 +2,13 @@
     <v-container fluid class="pa-0">
         <v-parallax height="350" src="../assets/portada.jpg">
          <h2 style="font-family: 'Fondamento', cursive; margin-block-start: auto" class=" primary--text mb-12 ml-8" align="center">
-             Bienvenido  {{nombreAdmin}}
+             Bienvenido  {{nombreE}}
             </h2>
         </v-parallax>
         <Mision class="ml-2"></Mision>
 
         <!-- Hover button-->
-        <v-row class="fill-height ml-8 mb-5" align="center" justify="center" > 
+        <v-row class="fill-height ml-8 mb-5" align="center" justify="center" v-if="btnem"> 
             <template v-for="(item, i) in items">
                 <v-col :key="i" cols="12" md="2">
                     <v-hover v-slot:default="{ hover }">
@@ -33,6 +33,7 @@
 
 <script>
 import Mision from '../components/Mision';
+import axios from "axios";
 export default {
     name: 'ABienvenida',
     
@@ -42,7 +43,8 @@ export default {
     data (){
         return{
             //Datos Admin
-            nombreAdmin: 'Nombre Admin',
+            nombreE: '',
+            btnem: true,
             items: [
                 {
                 title: 'Platos',
@@ -77,6 +79,27 @@ export default {
             ],
             transparent: 'rgba(255, 255, 255, 0)',
         }
+    },
+    methods: {
+        ver_tipo(n){
+            if(n!=2){
+                this.btnem=false
+            }
+        },
+        async obtenerNombre(){
+           try{
+               const nombre_e = await this.axios.get('v1/personal');
+               this.nombreE=nombre_e.data.name+' '+nombre_e.data.lasname
+
+           }catch(error){
+               console.log(error);
+           }
+        },
+
+    },
+    created() {
+        this.ver_tipo(localStorage.getItem('u')),
+        this.obtenerNombre()
     },
 }
 </script>

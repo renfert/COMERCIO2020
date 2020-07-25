@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <Menu v-if="nav1" :user="u" ></Menu> 
-    <MenuEmp v-if="!nav1" :user="u"></MenuEmp>
+    <Menu v-if="nav1" :user="userr" ></Menu> 
+    <MenuEmp v-if="!nav1" :user="userr"></MenuEmp>
     <v-content class="pa-0">
       <router-view/>
     </v-content>
@@ -25,13 +25,11 @@ export default {
     Menu,
     MenuEmp
   },
-  computed: {
-        ...mapState(['u'])
-    },
 
   data: () => ({
     mostrar: true,
     nav1:true,
+    userr: localStorage.getItem('u')
   }),
   methods: {
 
@@ -42,13 +40,26 @@ export default {
       } else{
         this.nav1=true;
       }
+    },
+
+  },
+  beforeCreate() {
+    const us= localStorage.getItem('u')
+    if(us==null){
+      localStorage.setItem("u",0)
+    } else{
+      this.userr=localStorage.getItem('u')
     }
   },
   created() {
-    this.mostrar_menu(this.u)
-  },
-  updated() {
-    this.mostrar_menu(this.u)
+    const us= localStorage.getItem('u')
+    if(us==null){
+      localStorage.setItem("u",0)
+      this.mostrar_menu(us)
+    }else{
+      this.mostrar_menu(us)
+    }
+    
   },
 };
 </script>

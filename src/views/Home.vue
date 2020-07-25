@@ -18,5 +18,6 @@ export default {
         Menu,
         Inicio
     },
+    
 }
 </script>
