@@ -88,7 +88,10 @@ export default {
         },
         async obtenerNombre(){
            try{
+               console.log("ANTES AXIOS")
+               console.log(localStorage.getItem('token'))
                const nombre_e = await this.axios.get('v1/personal');
+               console.log("GAAAA AXIOS")
                this.nombreE=nombre_e.data.name+' '+nombre_e.data.lasname
 
            }catch(error){

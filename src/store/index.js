@@ -23,6 +23,13 @@ export default new Vuex.Store({
     userr: localStorage.getItem('u')
   },
   mutations: {
+    actToken(){
+      const accessToken =localStorage.getItem('token')
+      if(accessToken){
+        console.log("miaw")
+        axios.defaults.headers.common['Authorization'] = accessToken;
+      }
+    },
     asig_rol(state, asig){
       state.rol=asig
     },

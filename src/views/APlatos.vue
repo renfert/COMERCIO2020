@@ -139,7 +139,8 @@ export default {
             
         },
         getImgUrl(pic) {
-            return require('../assets/'+pic+'.jpg')
+           // return require('../assets/'+pic+'.jpg')
+           return require('https://')
         },
         buscarPlato(nombrePlato){
             this.listaComidas()

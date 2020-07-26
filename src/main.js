@@ -15,6 +15,7 @@ axios.defaults.baseURL='https://restaurant-backend-01.herokuapp.com/';
 
 const accessToken =localStorage.getItem('token')
 if(accessToken){
+  console.log("miaw")
   axios.defaults.headers.common['Authorization'] = accessToken;
 }
 

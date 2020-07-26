@@ -27,19 +27,19 @@
                             <v-container>
                                 <v-row>
                                 <v-col cols="12" sm="6" md="4">
-                                    <v-text-field v-model="editedItem.name" label="Dessert name"></v-text-field>
+                                    <v-text-field v-model="editedItem.name" label="Nombres"></v-text-field>
                                 </v-col>
                                 <v-col cols="12" sm="6" md="4">
-                                    <v-text-field v-model="editedItem.calories" label="Calories"></v-text-field>
+                                    <v-text-field v-model="editedItem.calories" label="Apellidos"></v-text-field>
                                 </v-col>
                                 <v-col cols="12" sm="6" md="4">
-                                    <v-text-field v-model="editedItem.fat" label="Fat (g)"></v-text-field>
+                                    <v-text-field v-model="editedItem.fat" label="Teléfono"></v-text-field>
                                 </v-col>
                                 <v-col cols="12" sm="6" md="4">
-                                    <v-text-field v-model="editedItem.carbs" label="Carbs (g)"></v-text-field>
+                                    <v-text-field v-model="editedItem.carbs" label="Email"></v-text-field>
                                 </v-col>
                                 <v-col cols="12" sm="6" md="4">
-                                    <v-text-field v-model="editedItem.protein" label="Protein (g)"></v-text-field>
+                                    <v-text-field v-model="editedItem.protein" label="Licencia"></v-text-field>
                                 </v-col>
                                 </v-row>
                             </v-container>
@@ -47,8 +47,8 @@
 
                             <v-card-actions>
                             <v-spacer></v-spacer>
-                            <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
-                            <v-btn color="blue darken-1" text @click="save">Save</v-btn>
+                            <v-btn color="blue darken-1" text @click="close">Cancelar</v-btn>
+                            <v-btn color="blue darken-1" text @click="save">Guardar</v-btn>
                             </v-card-actions>
                         </v-card>
                     </v-dialog>
@@ -79,16 +79,16 @@
       dialog: false,
       headers: [
         {
-          text: 'Dessert (100g serving)',
+          text: 'Nombres',
           align: 'start',
           sortable: false,
           value: 'name',
         },
-        { text: 'Calories', value: 'calories' },
-        { text: 'Fat (g)', value: 'fat' },
-        { text: 'Carbs (g)', value: 'carbs' },
-        { text: 'Protein (g)', value: 'protein' },
-        { text: 'Actions', value: 'actions', sortable: false },
+        { text: 'Estado', value: 'calories' },
+        { text: 'Teléfono', value: 'fat' },
+        { text: 'Email', value: 'carbs' },
+        { text: 'Foto', value: 'protein' },
+        { text: 'Acciones', value: 'actions', sortable: false },
       ],
       desserts: [],
       editedIndex: -1,
@@ -110,7 +110,7 @@
 
     computed: {
       formTitle () {
-        return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
+        return this.editedIndex === -1 ? 'Nuevo' : 'Editar'
       },
     },
 

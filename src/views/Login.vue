@@ -57,7 +57,7 @@ export default {
     },
     methods: {
 
-        ...mapMutations(['asig_rol', 'asign_u']),
+        ...mapMutations(['asig_rol', 'asign_u', 'actToken']),
 
         
         async inicio(){
@@ -70,13 +70,16 @@ export default {
                 localStorage.setItem("token",`Bearer ${response.data.jwt}`)
                 console.info("rpta",response)
                 this.asign_u(response.data.roles[0].authority)
-                this.asig_rol(response.data.roles[0].authority)
-                
+               // this.asig_rol(response.data.roles[0].authority)
+                //ACTUALIZANDO TOKEN
+                this.actToken()
                 if(response.data.roles[0].authority=="ROLE_CLIEN"){
+                    this.$root.$emit('actMenu')
                     this.$router.push('/')
                     //this.$router.go(this.$router.currentRoute)
                     
                 } else{
+                    this.$root.$emit('actMenu')
                     this.$router.push('/abienvenida')
                 }
                 
@@ -86,6 +89,10 @@ export default {
                 console.log(error)
             }
         }
+    },
+    mounted() {
+       //this.$emit('gaa', localStorage.getItem('u'))
+
     },
 }
 </script>

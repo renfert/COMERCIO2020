@@ -127,6 +127,7 @@ export default {
         cerrar_sesion(){
             localStorage.setItem("token",null)
             localStorage.setItem("u",0)
+            this.$root.$emit('actMenu')
             this.$router.push('/')
             
         }
