@@ -8,7 +8,7 @@
         <v-divider></v-divider>
         <v-row class="ml-12 mb-4">
             <v-btn @click="obtenerUser">usrh</v-btn>
-            <v-btn @click="obtenerCat">pers</v-btn>
+            <v-btn @click="obtenerCat">ORDER</v-btn>
             <v-btn @click="obtenerPlatos">plat</v-btn>
         </v-row>
         
@@ -37,7 +37,7 @@ export default {
         async obtenerCat(){
            try{
                console.info("headers",this.axios.defaults.headers)
-               const usersDB = await this.axios.get('v1/personal');
+               const usersDB = await this.axios.get('v1/order');
                console.log(usersDB);
            }catch(error){
                console.log(error);

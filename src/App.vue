@@ -50,6 +50,15 @@ export default {
     },
 
   },
+  beforeCreate() {
+    const us= localStorage.getItem('u')
+    if(us==null){
+      localStorage.setItem("u",0)
+      this.mostrar_menu(us)
+    }else{
+      this.mostrar_menu(us)
+    }
+  },
   created() {
     const us= localStorage.getItem('u')
     if(us==null){

@@ -37,20 +37,18 @@
                         </v-btn>
                     </v-col>
                 </v-row>
+                <v-card  class="mb-3 ml-12" v-for="(item, index) in platos" :key="index">
 
-                <v-card class="mb-3 ml-12" v-for="(item, index) in platos" :key="index">
                     <v-card-text>
                         <v-row>
                             <v-col cols="9">
-                                <v-chip
-                                    class="ma-2 ml-0"
-                                    color="secondary"
-                                    label
-                                    outlined
-                                    
-                                >
+                                <v-chip class="ma-2 ml-0" color="secondary"  label>
+                                    <v-icon left>mdi-label</v-icon>
+                                    {{item.category}} {{item.id}} {{index}}
+                                </v-chip>
+                                <v-chip class="ma-2 ml-0" color="secondary"  label outlined >
                                     <v-icon left>mdi-silverware-fork</v-icon>
-                                    {{item.nombre}}
+                                    {{item.name}}
                                 </v-chip>
                             </v-col>
                             <v-col cols="3" >
@@ -62,10 +60,11 @@
                                 </v-btn>
                             </v-col>
                             
-                        </v-row>    
-                        <p>{{item.descr}}</p>
+                        </v-row>
+                        <p>Precio: S/.{{item.unitPrice}}</p>
                         <!--Sección imagen -->
-                         <v-img height="170" :src="getImgUrl(item.id)"></v-img>
+                        <v-img height="170" :src="getImgUrl(item.id)"></v-img>
+                            
 
                         
                     </v-card-text>
@@ -79,10 +78,11 @@
                     
                     <v-form @submit.prevent="agregar">
                         <v-text-field label="Nombre del plato" v-model="nombre" color="blue"> </v-text-field> 
-                        <v-textarea label="Descripción" v-model="descripcion" color="blue"></v-textarea>
+                        <v-text-field label="Precio" v-model="descripcion" color="blue"></v-text-field>
                         <v-select :items="select_cat" v-model="val_select_cat"  label="Categoría" dense outlined color="blue"></v-select>
-                        <v-file-input label="Imagen" filled prepend-icon="mdi-camera" color="pink" v-model="imagen"></v-file-input>
-                        
+                        <p>{{val_select_cat}}</p>
+                        <input type="file" @change="selectFile" >
+                        <p>{{message}}</p>
                         <v-btn class="success" block type="submit">Agregar</v-btn>
                     </v-form>
                     
@@ -95,7 +95,7 @@
                     
                     <v-form @submit.prevent="guardarCambios">
                         <v-text-field label="Nombre del plato" v-model="nombre" color="blue"> </v-text-field> 
-                        <v-textarea label="Descripción" v-model="descripcion" color="blue"></v-textarea>
+                        <v-text-field label="Precio" v-model="descripcion" color="blue"></v-text-field>
                         <v-select :items="select_cat" v-model="val_select_cat" label="Categoría" dense outlined color="blue"></v-select>
                        <v-file-input label="Imagen" filled prepend-icon="mdi-camera" color="pink" v-model="imagen"></v-file-input>
                         <v-btn class="warning" block type="submit" >Guardar Cambios</v-btn>
@@ -106,68 +106,121 @@
             </v-col>
         </v-row>
 
-        
+        <!--SNACKBAR-->
+         <v-snackbar  v-model="snackbar">
+            {{ mensaje}}
+            <template v-slot:action="{ attrs }">
+                <v-btn color="pink" text v-bind="attrs" @click="snackbar = false" >
+                Cerrar
+                </v-btn>
+            </template>
+        </v-snackbar>
     </v-container>
 </template>
 
 <script>
+import axios from "axios";
+import UploadService from "../services/UploadFilesService";
 import {mapState} from 'vuex';
 export default {
     name: 'APlatos',
     data(){
         return{
-             platos: [{id:'', nombre: '', descr: '', img: '', cat:''}],
-             categ: ['Entradas', 'Segundos', 'Extras'],
-            val: ['Entradas', 'Segundos', 'Extras'],
+             platos: [],
+             categ: ['Entradas', 'Segundos', 'Extras', 'Postre'],
+            val: ['Entradas', 'Segundos', 'Extras', 'Postre'],
             found: [],
             nombrePlato: '',
             formAgregar: true,
-            select_cat: ['Entrada', 'Segundo', 'Plato extra'],
+            select_cat: ['Entrada', 'Segundo', 'Plato extra', 'Postre'],
             indexAux: '',
             nombre: '',
             descripcion: '',
             val_select_cat: null,
-            imagen: ''
+            imagen: '',
+            categoria: 0,
+            //SNACKBAR
+            snackbar: false,
+            mensaje:'',
+
+            //To image
+            file: undefined,
+            selectedFiles: undefined,
+            currentFile: undefined,
+            progress: 0,
+            message: "",
+
+            aux_id_p: 0,
+
+            fileInfos: []
         }
     },
     computed: {
         ...mapState(['extra', 'segundo', 'entrada'])
     },
     methods:{
-        listaComidas(){
-            this.platos=this.entrada.concat(this.segundo).concat(this.extra)
+        async listaComidas(){
+           // this.platos=this.entrada.concat(this.segundo).concat(this.extra)
+           try{
+               const platosDB = await this.axios.get('v1/plate');
+               await platosDB.data.forEach(element => {
+                   let item = {}
+                   item.id = element.id;
+                   item.name= element.name;
+                   item.unitPrice = element.unitPrice;
+                   item.categoryID = element.category.id;
+                   if(item.categoryID ==1){
+                       item.category = 'Plato extra'
+                   } else if(item.categoryID ==2){
+                     item.category =  'Entrada'
+                   }else if(item.categoryID ==3){
+                       item.category =  'Segundo'
+                   } else{
+                       item.category =  'Postre'
+                   }
+                   item.image = element.image;
+                   this.platos.push(item)
+               });
+           }catch(error){
+               console.log(error)
+           }
             
         },
         getImgUrl(pic) {
            // return require('../assets/'+pic+'.jpg')
-           return require('https://')
+           return 'https://restaurant-backend-01.herokuapp.com/v1/plate/image/'+pic
         },
         buscarPlato(nombrePlato){
-            this.listaComidas()
             if(this.nombrePlato.length==0){
                 this.listaComidas()
             } else{
-                this.found = this.platos.filter(plato => plato.nombre.toUpperCase()== nombrePlato.toUpperCase()),
+                this.found = this.platos.filter(plato => plato.name.toUpperCase()== nombrePlato.toUpperCase()),
                 this.platos=this.found
             }
         },
-        eliminar(id){
-            this.platos = this.platos.filter(e => e.id !=id)
+        async eliminar(id){
+            const index = this.platos.indexOf(id)
+            const rpta = confirm('¿Seguro que desea eliminar este plato?') && this.platos.splice(index, 1)
+            if(rpta){
+            await this.axios.delete(`v1/plate/${id}`)
+            }
+            
         },
         editar(index){
             this.formAgregar=false
             this.indexAux=index
-            this.nombre=this.platos[index].nombre
-            this.descripcion=this.platos[index].descr
-            if(this.platos[index].cat==1){
-                this.val_select_cat='Entrada'
-            }else if(this.platos[index].cat==2){
-               this.val_select_cat='Segundo'
-            } else{
+            this.nombre=this.platos[index].name
+            this.descripcion=this.platos[index].unitPrice
+            if(this.platos[index].categoryID==1){
                 this.val_select_cat='Plato extra'
+            }else if(this.platos[index].categoryID==2){
+               this.val_select_cat='Entrada'
+            } else if(this.platos[index].categoryID==3){
+                this.val_select_cat='Segundo'
+            } else{
+                this.val_select_cat='Postre'
             }
-            this.imagen=this.platos[index].img
-           //this.val_select_cat=this.platos[index].cat
+            //this.image=this.platos[index].image
         },
         guardarCambios(){
             this.platos[this.indexAux].nombre= this.nombre
@@ -182,10 +235,94 @@ export default {
         clear(){
             this.nombrePlato = '',
             this.listaComidas()
-        }
+        },
+
+        //TO IMAAAAAAAAAAAAAAAAGE
+        selectFile(event) {
+            this.file = event.target.files[0];
+        },
+        async upload(id_p) {
+            this.progress = 0;
+            this.aux_id_p=id_p;
+            try{
+                this.currentFile = this.file;
+                const res = await UploadService.upload(id_p,this.currentFile, event => {
+                        this.progress = Math.round((100 * event.loaded) / event.total);
+                    })
+                this.message = res.data.message;
+                console.log(this.message)
+                
+                const imagen = await UploadService.getFiles(id_p);
+
+                
+                this.fileInfos = imagen.data;
+            }
+            catch{
+                this.progress = 0;
+                this.message = "Could not upload the file!";
+                console.log(this.message)
+
+                this.currentFile = undefined;
+            }
+
+            this.selectedFiles = undefined;
+        },
+        async agregar(){
+            if(this.nombre === '' || this.descripcion === ''){
+                console.log('CAMPOS VACÍOOOOOOS')
+            } else{
+                
+                try{
+                    if(this.val_select_cat=='Plato extra'){
+                        this.categoria=1
+                    }else if(this.val_select_cat=='Entrada'){
+                        this.categoria=2
+                    } else if(this.val_select_cat=='Segundo'){
+                        this.categoria=3
+                     } else{
+                        this.categoria=4
+                    }
+                    const plato = {
+                        name: this.nombre,
+                        unitPrice: this.descripcion,
+                        category: {id: this.categoria}
+                    }
+                    const pDB = await this.axios.post('v1/plate', plato);
+                    console.log(pDB.data);
+
+                    //Para mostrar imagen
+                    await this.upload(pDB.data.id)
+                    this.fileInfos ? console.log("existe imagen"):null
+
+                    let item={}
+                    item.id=pDB.data.id;
+                    item.name=plato.name;
+                    item.unitPrice=plato.unitPrice;
+                    item.category=this.val_select_cat;
+                    
+                    this.platos.push(item)
+                    //Limpia campos
+                    this.nombre='',
+                    this.unitPrice=''
+                    this.categoria=null
+                    //SNACKBAR
+                    this.snackbar= true
+                    this.mensaje='Plato agregado.'
+
+                }catch(error){
+                    console.log(error)
+                }
+
+            }
+        },
     },
     created(){
         this.listaComidas()
+    },
+     mounted() {
+        UploadService.getFiles(this.aux_id_p).then(response => {
+            this.fileInfos = response.data;
+        });
     }
 }
 </script>

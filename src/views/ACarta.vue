@@ -4,7 +4,7 @@
         <v-img src="../assets/plato2.png" height="50" contain></v-img> </h1>
         <p></p>
         <v-divider></v-divider>
-        <v-row class="mt-12">
+        <v-row class="mt-12 ml-16">
             <v-col cols="6">
                 <v-hover v-slot:default="{ hover }">
                     <v-card class="mx-auto" color="grey lighten-4" max-width="400">
