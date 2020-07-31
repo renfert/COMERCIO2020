@@ -6,8 +6,8 @@
         <v-divider></v-divider>
         <v-row class="mt-12 ml-16">
             <v-col cols="6">
-                <v-hover v-slot:default="{ hover }">
-                    <v-card class="mx-auto" color="grey lighten-4" max-width="400">
+                <v-hover v-slot:default="{ hover }" >
+                    <v-card class="mx-auto" color="grey lighten-4" max-width="400" href='/amenu'>
                         <v-img :aspect-ratio="16/9" src="../assets/carta_menu.png">
                             <v-expand-transition>
                                 <div v-if="hover" 
@@ -28,7 +28,7 @@
             </v-col>
             <v-col cols="6">
                 <v-hover v-slot:default="{ hover }">
-                    <v-card class="mx-auto" color="grey lighten-4" max-width="400">
+                    <v-card class="mx-auto" color="grey lighten-4" max-width="400"  href='/aextra'>
                         <v-img :aspect-ratio="16/9" src="../assets/carta_extra.jpg">
                             <v-expand-transition>
                                 <div v-if="hover" 

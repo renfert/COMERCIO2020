@@ -65,6 +65,16 @@ Vue.use(VueRouter)
     name: 'ARepartidores',
     component: () => import('../views/ARepartidores.vue')
   },
+  {
+    path: '/amenu',
+    name: 'AMenu',
+    component: () => import('../views/AMenu.vue')
+  },
+  {
+    path: '/aextra',
+    name: 'AExtra',
+    component: () => import('../views/AExtra.vue')
+  },
 
   
 ]

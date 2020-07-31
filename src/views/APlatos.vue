@@ -61,7 +61,7 @@
                             </v-col>
                             
                         </v-row>
-                        <p>Precio: S/.{{item.unitPrice}}</p>
+                        <p>Precio: S/.{{item.unitPrice}}.00</p>
                         <!--Sección imagen -->
                         <v-img height="170" :src="getImgUrl(item.id)"></v-img>
                             
@@ -97,7 +97,8 @@
                         <v-text-field label="Nombre del plato" v-model="nombre" color="blue"> </v-text-field> 
                         <v-text-field label="Precio" v-model="descripcion" color="blue"></v-text-field>
                         <v-select :items="select_cat" v-model="val_select_cat" label="Categoría" dense outlined color="blue"></v-select>
-                       <v-file-input label="Imagen" filled prepend-icon="mdi-camera" color="pink" v-model="imagen"></v-file-input>
+                       
+                        <input type="file" @change="selectFile" >
                         <v-btn class="warning" block type="submit" >Guardar Cambios</v-btn>
                         
                     </v-form>
@@ -222,12 +223,41 @@ export default {
             }
             //this.image=this.platos[index].image
         },
-        guardarCambios(){
-            this.platos[this.indexAux].nombre= this.nombre
-            this.platos[this.indexAux].descripcion= this.descripcion
-            this.formAgregar=true
-            this.titulo ='',
-            this.descripcion = ''
+        async guardarCambios(){
+            try{
+                this.platos[this.indexAux].nombre= this.nombre
+                this.platos[this.indexAux].unitPrice= this.descripcion
+                if(this.val_select_cat=='Plato extra'){
+                        this.categoria=1
+                    }else if(this.val_select_cat=='Entrada'){
+                        this.categoria=2
+                    } else if(this.val_select_cat=='Segundo'){
+                        this.categoria=3
+                     } else{
+                        this.categoria=4
+                    }
+                    const plato = {
+                        name: this.nombre,
+                        unitPrice: this.descripcion,
+                        category: {id: this.categoria}
+                    }
+                    
+
+                    const cDB = await this.axios.patch(`v1/plate/${this.platos[this.indexAux].id}`, plato);
+                    //Para imagen
+                    await this.upload(this.platos[this.indexAux].id)
+                    this.fileInfos ? console.log("existe imagen"):null
+
+                    //SNACKBAR
+                    this.snackbar= true
+                    this.mensaje='Plato modificado.'
+
+                    this.formAgregar=true,
+                    this.nombre ='',
+                    this.descripcion = ''
+            }catch(error){
+                console.log(error)
+            }
         },
         buscarCat(catPlato){
             console.log(catPlato)
@@ -290,7 +320,7 @@ export default {
                     const pDB = await this.axios.post('v1/plate', plato);
                     console.log(pDB.data);
 
-                    //Para mostrar imagen
+                    //Para imagen
                     await this.upload(pDB.data.id)
                     this.fileInfos ? console.log("existe imagen"):null
 
