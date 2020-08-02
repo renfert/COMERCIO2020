@@ -1,6 +1,11 @@
 <template>
      <v-container fluid>
         <v-row style="height:90px;"></v-row>
+
+        <v-row>
+            <v-col cols="9">
+
+            
         <v-card>
             <v-tabs centered dark icons-and-text v-model="tab" background-color="primary">
                 <v-tabs-slider></v-tabs-slider>
@@ -30,12 +35,21 @@
                                         </v-img>
                                         <!-- Sección título-->
                                         <v-card-title >
-                                            <h3 >{{item.name}}</h3>
+                                            <h3 >{{item.platoName}}</h3>
                                         </v-card-title>
                                         <!-- Sección texto-->
                                         <v-card-text>
-                                            <p>{{item.descr}}</p>
+                                            <h4 style="font-family: 'Roboto Slab', serif; font-size: 20px;" class="secondary--text">S/.{{item.unitPrice}}.00</h4>
+                                            
                                         </v-card-text>
+                                         <v-row>
+                                        <v-col cols="2">
+                                        </v-col>
+                                        <v-col cols="6">
+                                            <v-btn color="green" dark @click="agregarCarrito(item.id)">Agregar</v-btn>
+
+                                        </v-col>
+                                    </v-row> 
                                     </v-card>
                         </v-card>
                     </v-col>
@@ -51,12 +65,21 @@
                                         </v-img>
                                         <!-- Sección título-->
                                         <v-card-title >
-                                            <h3 >{{i.nombre}}</h3>
+                                            <h3 >{{i.platoName}}</h3>
                                         </v-card-title>
                                         <!-- Sección texto-->
                                         <v-card-text>
-                                            <p>{{i.descr}}</p>
-                                        </v-card-text>
+                                            <h4 style="font-family: 'Roboto Slab', serif; font-size: 20px;" class="secondary--text">S/.{{i.unitPrice}}.00</h4>
+
+                                   </v-card-text>
+                                   <v-row>
+                                        <v-col cols="2">
+                                        </v-col>
+                                        <v-col cols="6">
+                                            <v-btn color="green" dark @click="agregarCarrito(i.id)">Agregar</v-btn>
+
+                                        </v-col>
+                                    </v-row> 
                                     </v-card>
                         </v-card>
                     </v-col>
@@ -66,6 +89,60 @@
                 </v-tab-item>
             </v-tabs-items>
         </v-card>
+        </v-col>
+        <!--CARRITO-->
+        <v-col cols="3">
+             <h2 style="font-family: 'Oswald', sans-serif; font-size: 24px;" class="mt-10" justify="center" align="center">Carrito
+                 <v-img src="../assets/anadir.png" height="50" contain></v-img>
+             </h2>
+             <p></p>
+             <v-divider></v-divider>
+        <v-card>
+            <v-row >
+                <v-col cols="12" v-for="i of pedido" :key="i.id" >
+                    <v-row>
+                        <v-col cols="4">
+                            <v-img width="150" :src="getImgUrl(i.plato)" style="border-radius: 999px; border: 10px solid #f1f1f1"></v-img>
+
+                        </v-col>
+                        <v-col cols="8">
+                            <v-row>
+                                <v-col cols="7">
+                                    <h4 style="font-family: 'Roboto Slab', serif; font-size: 14px;">{{i.platoName}}</h4>
+                                </v-col>
+                                <v-divider dark></v-divider>
+                                <v-col cols="5">
+                                    <h4 style="font-family: 'Roboto Slab', serif; font-size: 14px;" class="secondary--text">S/.{{i.unitPrice}}.00</h4>
+                                </v-col>
+                            </v-row>
+                            <v-row>
+                                <v-col cols="12">
+                                    <small>Cantidad :  </small>
+                                    <span> {{i.cantidad}}</span>
+                                
+                                    <v-btn icon> <v-icon>mdi-minus</v-icon> </v-btn>
+                                    <v-btn icon> <v-icon>mdi-plus</v-icon> </v-btn>
+                                </v-col>
+                                    
+                            </v-row>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                    </v-row>
+                </v-col>
+            </v-row>
+        </v-card>
+        <v-row>
+            <p></p>
+            <v-col cols="1"></v-col>
+            <v-col cols="10">
+                <v-btn color="orange" block @click="continuar">Confirmar pedido</v-btn>
+            </v-col>
+        </v-row>
+        
+        </v-col>
+        
+        </v-row>
     </v-container>
 </template>
 
@@ -81,11 +158,17 @@ export default {
         platos: [],
         menu_segundos: [],
         entradas: '',
-        segundos: ''
+        segundos: '',
+        fecha2: new Date().toISOString().substr(0,10),
+
+
+        listaEntradas: [],
+        listaSegundos: [],
+        listaExtras: [],
+        todosPlatos: [],
+
+        pedido: [],
       }
-    },
-    computed: {
-        ...mapState(['extra', 'segundo', 'entrada'])
     },
     methods:{
         
@@ -93,31 +176,74 @@ export default {
             if(i==1){
                 this.entradas='Entradas',
                 this.segundos='Segundos',
-                this.platos=this.entrada,
-                this.menu_segundos=this.segundo
+
+                this.platos=this.listaEntradas,
+                this.menu_segundos=this.listaSegundos
             } else{
                 this.entradas=' ',
                 this.segundos=' ',
                 
-                this.platos = this.extra,
+                this.platos = this.listaExtras,
                 this.menu_segundos=''
             }
         },
         getImgUrl(pic) {
-            return require('../assets/'+pic+'.jpg')
+           return 'https://restaurant-backend-01.herokuapp.com/v1/plate/image/'+pic
         },
-        async obtenerExtra(){
+        async obtenerPlatos(){
            try{
-               const extraDB = await this.axios.get('v1/plate');
-               console.log(extraDB);
+            const obtFechaDB = await this.axios.get(`v1/menu/day/${this.fecha2}`)
+            const platosDB = await this.axios.get('v1/plate')
+            await platosDB.data.forEach(element => {
+                   let ite = {}
+                   ite.id = element.id;
+                   ite.name= element.name;
+                   ite.unitPrice = element.unitPrice;
+                   ite.categoryID = element.category.id;
+                   this.todosPlatos.push(ite)
+            });
+            const menuDB = await this.axios.get(`v1/menu/${obtFechaDB.data.id}`)
+            console.log(this.menuDB)
+           await menuDB.data.plateMenuDaily.forEach(element => {
+                let item = {}
+                item.id = element.plate.id;
+                item.stock = element.stock;
+                // let found = addressDB.data.filter(dir => dir.id == element.address.id);
+                let found = platosDB.data.filter(plat => plat.id == element.plate.id);
+                item.platoName= found[0].name;
+                item.unitPrice = found[0].unitPrice;
+                item.category = found[0].category.id;
+                if(item.category == 1){this.listaExtras.push(item)} 
+                else if(item.category == 2){this.listaEntradas.push(item)} 
+                else if(item.category == 3){this.listaSegundos.push(item)} 
+                else {console.log()}
+                this.listaComidas(1)
+            });
            }catch(error){
                console.log(error);
            }
        },
+       agregarCarrito(ide){
+           let found = this.todosPlatos.filter(plat => plat.id == ide);
+           console.log(ide)
+
+           console.log(this.todosPlatos)
+           console.log(found)
+           let item = {}
+           item.plato= found[0].id
+           item.platoName=found[0].name
+           item.unitPrice= found[0].unitPrice
+           item.cantidad=1
+           this.pedido.push(item)
+       },
+       continuar(){
+            this.$router.push('/ccarta')
+        },
     },
     created(){
-        this.listaComidas(1)
-        this.obtenerExtra()
+      //  this.obtenerPlatos()
+      //  this.listaComidas(1)
+
     }
 }
 

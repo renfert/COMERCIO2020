@@ -23,7 +23,7 @@
             
         </v-row>
         <!-- Estadísticas-->
-        <v-row class="ml-16 mr-12 pa-4">
+        <v-row class="ml-16 mr-12 pa-4" justify="center">
             <v-col cols="7" sm="12" md="7">
                 <h3 class="secondary--text mb-6">Número de platos vendidos</h3>
                 <template>
@@ -35,6 +35,16 @@
             <v-col cols="3" sm="12" md="5">
                 <h3 class="secondary--text mb-6">Puntuación de repartidores</h3>
                <apexchart width="350" type="donut" :options="chartOptions" :series="chartSeries"></apexchart>
+            </v-col>
+        </v-row>
+        <v-row class="ml-16 mr-12 pa-4">
+            <v-col cols="7" sm="12" md="12">
+                <h3 class="secondary--text mb-6">Número de pedidos por cliente (Global)</h3>
+                <template>
+                    <div>
+                        <apexchart type="bar" height="350" :options="chartOptions3" :series="series3"></apexchart>
+                    </div>
+                </template>
             </v-col>
         </v-row>
 
@@ -86,24 +96,52 @@ export default {
 
             un: [],
             categ: [],
+            ordenes: [],
+            clientes: [],
+            repartidores: [],
+            puntuacion: [],
             //Donut
-            chartSeries: [44, 55, 41, 17, 15],
-            chartOptions: {
-                chart: {
-                type: 'donut',
-                },
-                responsive: [{
-                breakpoint: 480,
-                options: {
-                    chart: {
-                    width: 150
-                    },
-                    legend: {
-                    position: 'bottom'
-                    }
-                }
-                }]
+            chartSeries: [],
+          chartOptions: {
+            chart: {
+              width: 380,
+              type: 'pie',
             },
+            labels: [],
+            responsive: [{
+              breakpoint: 480,
+              options: {
+                chart: {
+                  width: 200
+                },
+                legend: {
+                  position: 'bottom'
+                }
+              }
+            }]
+          },
+            //Bar
+             series3: [{
+            data: []
+          }],
+          chartOptions3: {
+            chart: {
+              type: 'bar',
+              height: 350
+            },
+            plotOptions: {
+              bar: {
+                horizontal: true,
+              }
+            },
+            dataLabels: {
+              enabled: false
+            },
+            xaxis: {
+              categories: [],
+            }
+          },
+          //Line
         }
     },
     computed: {
@@ -116,8 +154,6 @@ export default {
             this.series = [{
                 data: newData2
             }]
-
-
             const newDataCat = this.categ
 
             for(let i=0; i<this.un.length; i++){
@@ -125,12 +161,39 @@ export default {
                     newDataCat[i]
                 ]
             }
+        },
+        updateChart2() {
+            const newData2 = this.repartidores
+                this.chartSeries=[5,5,3,4]
+            const newDataCat = this.puntuacion
+            console.log(this.chartSeries)
+            for(let i=0; i<this.puntuacion.length; i++){
+                this.chartOptions.labels[i]=[
+                    newDataCat[i]
+                ]
+            }
+        },
+        updateChart3() {
+            const newData2 = this.ordenes
+            // In the same way, update the series option
+            this.series3 = [{
+                data: newData2
+            }]
+            const newDataCat = this.clientes
 
+            for(let i=0; i<this.un.length; i++){
+                this.chartOptions3.xaxis.categories[i]=[
+                    newDataCat[i]
+                ]
+            }
         },
        async obtenerPedido(){
            try{
                const pedidosDB = await this.axios.get('v1/order');
                const addressDB = await this.axios.get('v1/address');
+                const repDB = await this.axios.get('v1/report/delivery');
+               const clieDB = await this.axios.get('v1/report/client');
+               
                await pedidosDB.data.forEach(element => {
                    let item= {}
                    item.id = element.id;
@@ -139,7 +202,7 @@ export default {
                    if(item.estado==1){item.estadoD = 'En preparación'}
                    else if(item.estado==2){item.estadoD = 'Enviado'}
                    else{item.estadoD = 'Entregado'}
-                   item.unidades= element.orderDetail[0].n_unit;
+                   item.unidades= element.orderDetail[0].orderDetailPlate[0].nunit;
                    item.fecha= element.dateAt;
                    if(element.payed){
                     item.pago= 'Cancelado';
@@ -154,6 +217,17 @@ export default {
                     this.categ.push(item.plato)
                    this.updateChart()
                    
+               });
+               await repDB.data.forEach(element => {
+                   this.repartidores.push(element.rating)
+                   this.puntuacion.push(element.name + '  ' + element.lasname)
+                   
+                   this.updateChart2()
+               });
+               await clieDB.data.forEach(element => {
+                   this.ordenes.push(element.nOrder)
+                   this.clientes.push(element.name + '  ' + element.lasname)
+                   this.updateChart3()
                });
            }catch(error){
                console.log(error);

@@ -15,6 +15,8 @@
         <v-divider></v-divider>
 
         <!--Card options-->
+        <h2 style="font-family: 'Oswald', sans-serif; font-size: 36px;" class="mt-12 ml-16" justify="center" align="center">Opciones</h2>
+
         <v-card>
          <v-row justify="center" class="ml-16 mr-8">
             <v-col xs="10" sm="4" md="3"  v-for="i of extra" :key="i.id">
@@ -34,25 +36,67 @@
                                     <p>Precio: S/.{{i.unitPrice}}.00</p>
                                 </v-col>
                                 <v-col cols="6">
-                                    <v-btn color="green" v-if="!cambio" dark >Agregar</v-btn>
-                                    <v-btn color="green" dark >Quitar</v-btn>
+                                    <v-btn color="green" dark @click="agregar(i.id)" >{{boton}}</v-btn>
 
                                 </v-col>
                             </v-row> 
                         </v-card-text>
-                        <v-row>
-                            <v-col cols="3"> <h5>Stock:</h5> </v-col>
-                            <v-col cols="8">
-                                <v-text-field label="Stock" v-model="stockU" color="blue"></v-text-field>
-                                <small v-if="cambio">Debe ingresar una cantidad.</small>
-                            </v-col>
-                        </v-row>
                         
                         
                     </v-card>
                 </v-card>
             </v-col>
           </v-row>
+
+        <h2 style="font-family: 'Oswald', sans-serif; font-size: 36px;" class="mt-12 ml-16" justify="center" align="center">Carta - Platos Extra</h2>
+        <v-card>
+            <v-row >
+                <v-col xs="10" sm="6" md="5"  v-for="i of extra_menu" :key="i.id" class="ml-16">
+                    <v-row>
+                        <v-col cols="1">
+
+                        </v-col>
+                        <v-col cols="4">
+                            <v-img width="150" :src="getImgUrl(i.plato)" style="border-radius: 999px; border: 10px solid #f1f1f1"></v-img>
+                        </v-col>
+                        <v-col cols="7">
+                            <v-row>
+                                <v-col cols="7">
+                                    <h4 style="font-family: 'Roboto Slab', serif; font-size: 22px;">{{i.platoName}}</h4>
+                                </v-col>
+                                <v-divider dark></v-divider>
+                                <v-col cols="5">
+                                    <h4 style="font-family: 'Roboto Slab', serif; font-size: 20px;" class="secondary--text">S/.{{i.unitPrice}}.00</h4>
+                                </v-col>
+                            </v-row>
+                            <v-row>
+                                <v-col cols="11">
+                            <h4 style="font-family: 'Open Sans Condensed', sans-serif;font-family: 'Roboto Slab', serif; font-size: 14px;">Stock: {{i.stock}} platos</h4>
+                        </v-col>
+                            </v-row>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                    </v-row>
+                </v-col>
+            </v-row>
+        </v-card>
+          
+
+          <!--Dialog-->
+        <v-dialog v-model="dialog" width="500" >
+            <v-card>
+                <v-card-title>Stock</v-card-title>
+                <v-text-field label="Stock" v-model="stockU" color="blue" class="ml-12"></v-text-field>
+                <small v-if="cambio" class="error--text ml-12">Debe ingresar una cantidad.</small>
+                <v-divider></v-divider>
+                <v-card-actions>
+                    <v-btn @click="agregarMenu()">Agregar</v-btn>
+                </v-card-actions>
+            </v-card>
+
+
+        </v-dialog>
         </v-card>
     </v-container>
 </template>
@@ -65,7 +109,14 @@ export default {
         return {
             extra: [],
             stockU: 0,
-            cambio: false
+            cambio: false,
+            extra_menu: [],
+            boton: 'Agregar',
+            dialog: false,
+            auxID: 0,
+            fecha: '2020-08-01',
+            obtFechaDB: '',
+            fecha2: new Date().toISOString().substr(0,10)
         }
     },
     methods:{
@@ -93,17 +144,167 @@ export default {
            // return require('../assets/'+pic+'.jpg')
            return 'https://restaurant-backend-01.herokuapp.com/v1/plate/image/'+pic
         },
-        agregar(id){
-            if(stockU==0){
-                cambio=true
+        agregar(pid){
+            this.dialog=true;
+            this.auxID=pid
+            
+        },
+        async agregarMenu(){
+            if(this.stockU==0){
+                this.cambio=true
             }else{
-                cambio= false
+                this.dialog=false
+                this.cambio= false
+                try{
+                  if(this.obtFechaDB.data==""){
+                        const fechaE = {
+                            createAt: this.fecha2
+                        }
+                        this.obtFechaDB = await this.axios.post('v1/menu', fechaE)
+                        console.log(this.obtFechaDB)
 
+                        //this.obtFechaDB = await this.axios.get(`v1/menu/day/${this.fecha2}`)
+                   } 
+                   const platoE = {
+                        stock: this.stockU,
+                        plate : {id: this.auxID},
+                    }
+                  const salidaDB = await this.axios.patch(`v1/menu/${this.obtFechaDB.data.id}`,platoE)
+                    let item = {}
+                   // item.id = salidaDB.data.plateMenuDaily[0].plate.id;
+                    item.plato = salidaDB.data.plateMenuDaily[0].plate.id;
+                    item.stock = this.stockU;
+                    item.platoName= this.filtrarNombrePlato(item.plato)
+                    item.unitPrice = this.filtrarPrecioPlato(item.plato)
+                    this.extra_menu.push(item) 
+                    this.stockU= 0 
+                }catch(error){
+                    console.log(error)
+                }
             }
+        },
+        async mostrarMenu(){
+            try{
+                this.obtFechaDB = await this.axios.get(`v1/menu/day/${this.fecha2}`)
+                console.log(this.obtFechaDB)
+                const segundosDB = await this.axios.get(`v1/menu/${this.obtFechaDB.data.id}`)
+                await segundosDB.data.plateMenuDaily.forEach(element => {
+                    let item = {}
+                    let found = this.extra.filter(plato => plato.id == element.plate.id)
+                    if(found.length !=0){
+                        //item.id = element.plate.id;
+                        item.plato = element.plate.id;
+                        item.stock = element.stock;
+                        item.platoName= this.filtrarNombrePlato(item.plato)
+                        item.unitPrice = this.filtrarPrecioPlato(item.plato)
+                        this.extra_menu.push(item)
+                    }
+                    
+                    
+                });
+            }catch(error){
+                console.log("No existe menú")
+                console.log(error)
+            }
+        },
+        filtrarNombrePlato(id){
+            let found = this.extra.filter(plato => plato.id == id)
+            if(found){
+                return found[0].name
+            }else{
+                console.log("next")
+            }
+            console.log("FOUND")
+            console.log(found)
+            //this.extra_menu[indice].platoName=found
+            
+        },
+        filtrarPrecioPlato(id){
+            let found = this.extra.filter(plato => plato.id == id)
+            if(found){
+                return found[0].unitPrice
+            } else{
+                console.log("next")
+            }
+            
+        },
+        getColor(i){
+            let found = this.extra_menu.filter(aux => aux.plate.id == i);
+            if(found==i) return 'red'
+            else return 'green'
         }
     },
     created() {
-       this.getExtra()
+      this.getExtra()
+     this.mostrarMenu()
     },
 }
 </script>
+
+
+<!--
+{
+    "description": "en envio",
+    "address": {
+        "id": 3
+    },
+    "orderDetail": [
+        {
+            "discount": 0.0,
+            "menu": true,
+            "description": "platos extras",
+            "orderDetailPlate": [
+                {
+                    "plate": {
+                        "id": 5
+                        
+                    },
+                    "nunit": 3
+                },
+                {
+                    "plate": {
+                        "id": 31
+                        
+                    },
+                    "nunit": 3
+                },{
+                    "plate": {
+                        "id": 82
+                        
+                    },
+                    "nunit": 3
+                }
+            ]
+        },
+        {
+            "discount": 0.0,
+            "menu": false,
+            "description": "",
+            "orderDetailPlate": [
+                {
+                    "plate": {
+                        "id": 5
+                        
+                    },
+                    "nunit": 3
+                }
+            ]
+        },
+        {
+            "discount": 0.0,
+            "menu": false,
+            "description": "",
+            "orderDetailPlate": [
+                {
+                    "id": 1,
+                    "plate": {
+                        "id": 15
+                        
+                    },
+                    "nunit": 3
+                }
+            ]
+        }
+    ]
+}
+-->
