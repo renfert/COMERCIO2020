@@ -146,6 +146,8 @@
                     </v-row>
                 </v-col>
             </v-row>
+        
+        
         </v-card>
           
 
@@ -211,9 +213,9 @@ export default {
                         item.name= element.name;
                         item.unitPrice = element.unitPrice;
                         this.segundo.push(item)
-                    } /* else if(element.category.id==4){
+                    } else if(element.category.id==4){
                         this.postre.push(item)
-                    } */
+                    } 
                     
                 });
             }catch(error){
@@ -241,6 +243,11 @@ export default {
                             createAt: this.fecha2
                         }
                         this.obtFechaDB = await this.axios.post('v1/menu', fechaE)
+                        const platoE = {
+                            stock: 60,
+                            plate : {id: 241},
+                        }
+                        const salidaDB = await this.axios.patch(`v1/menu/${this.obtFechaDB.data.id}`,platoE)
                    } 
                    const platoE = {
                         stock: this.stockU,
@@ -289,16 +296,22 @@ export default {
                     } else{
                         let found2 = this.segundo.filter(plato2 => plato2.id == element.plate.id)
                         if(found2.length !=0){
-                            let item = {}
-                            item.plato = element.plate.id;
-                            item.stock = element.stock;
-                            item.platoName= this.filtrarNombrePlato(item.plato)
-                            item.unitPrice = this.filtrarPrecioPlato(item.plato)
-                            this.segundo_menu.push(item)
+                            let n= this.segundo_menu.filter(plato => plato.plato == element.plate.id)
+                            if (n !=0){
+                                 console.log("")
+                            } else{let item = {}
+                                item.plato = element.plate.id;
+                                item.stock = element.stock;
+                                item.platoName= this.filtrarNombrePlato(item.plato)
+                                item.unitPrice = this.filtrarPrecioPlato(item.plato)
+                                this.segundo_menu.push(item)}
                         }else{
-                            console.log("Next")
-                        }
+                            
+                            console.log("next")
+                            
+                        } 
                     }
+                    console.log(this.segundo_menu)
                     
                 });
             }catch(error){
@@ -315,7 +328,9 @@ export default {
                 if(found2.length !=0){
                     return found2[0].name
                 } else{
-                    console.log()
+                    
+                        console.log()
+                    
                 }
                 
             }

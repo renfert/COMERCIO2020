@@ -35,7 +35,7 @@
                                         </v-img>
                                         <!-- Sección título-->
                                         <v-card-title >
-                                            <h3 >{{item.platoName}}</h3>
+                                            <h4 >{{item.platoName}}</h4>
                                         </v-card-title>
                                         <!-- Sección texto-->
                                         <v-card-text>
@@ -65,7 +65,7 @@
                                         </v-img>
                                         <!-- Sección título-->
                                         <v-card-title >
-                                            <h3 >{{i.platoName}}</h3>
+                                            <h4 >{{i.platoName}}</h4>
                                         </v-card-title>
                                         <!-- Sección texto-->
                                         <v-card-text>
@@ -99,7 +99,7 @@
              <v-divider></v-divider>
         <v-card>
             <v-row >
-                <v-col cols="12" v-for="i of pedido" :key="i.id" >
+                <v-col cols="12" v-for="(i, index) of pedido" :key="i.id" >
                     <v-row>
                         <v-col cols="4">
                             <v-img width="150" :src="getImgUrl(i.plato)" style="border-radius: 999px; border: 10px solid #f1f1f1"></v-img>
@@ -120,8 +120,10 @@
                                     <small>Cantidad :  </small>
                                     <span> {{i.cantidad}}</span>
                                 
-                                    <v-btn icon> <v-icon>mdi-minus</v-icon> </v-btn>
-                                    <v-btn icon> <v-icon>mdi-plus</v-icon> </v-btn>
+                                    <v-btn icon @click="restar(index)"> <v-icon>mdi-minus</v-icon> </v-btn>
+                                    <v-btn icon @click="aumentar(index)"> <v-icon>mdi-plus</v-icon> </v-btn>
+
+                                    <v-btn icon color="error" @click="eliminar(i.plato)"> <v-icon>mdi-delete</v-icon> </v-btn>
                                 </v-col>
                                     
                             </v-row>
@@ -136,7 +138,7 @@
             <p></p>
             <v-col cols="1"></v-col>
             <v-col cols="10">
-                <v-btn color="orange" block @click="continuar">Confirmar pedido</v-btn>
+                <v-btn color="orange" block @click="continuar">Continuar</v-btn>
             </v-col>
         </v-row>
         
@@ -169,6 +171,9 @@ export default {
 
         pedido: [],
       }
+    },
+    computed: {
+        ...mapState(['platosPedido'])
     },
     methods:{
         
@@ -225,10 +230,7 @@ export default {
        },
        agregarCarrito(ide){
            let found = this.todosPlatos.filter(plat => plat.id == ide);
-           console.log(ide)
-
-           console.log(this.todosPlatos)
-           console.log(found)
+           
            let item = {}
            item.plato= found[0].id
            item.platoName=found[0].name
@@ -236,13 +238,26 @@ export default {
            item.cantidad=1
            this.pedido.push(item)
        },
+       eliminar(ide){
+           console.log(ide)
+            this.pedido = this.pedido.filter(e => e.plato !=ide)
+        },
        continuar(){
-            this.$router.push('/ccarta')
+           console.log(this.pedido)
+           localStorage.setItem("pedido",JSON.stringify(this.pedido))
+           this.platosPedido=this.pedido
+            this.$router.push('/datospedido')
+        },
+        aumentar(ine){
+            this.pedido[ine].cantidad++
+        },
+        restar(ine){
+            if(this.pedido[ine].cantidad>1)
+            this.pedido[ine].cantidad--
         },
     },
     created(){
-      //  this.obtenerPlatos()
-      //  this.listaComidas(1)
+        this.obtenerPlatos()
 
     }
 }

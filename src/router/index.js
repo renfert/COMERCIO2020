@@ -75,6 +75,26 @@ Vue.use(VueRouter)
     name: 'AExtra',
     component: () => import('../views/AExtra.vue')
   },
+  {
+    path: '/datospedido',
+    name: 'DatosPedido',
+    component: () => import('../views/DatosPedido.vue')
+  },
+  {
+    path: '/mispedidos',
+    name: 'MisPedidos',
+    component: () => import('../views/MisPedidos.vue')
+  },
+  {
+    path: '/dpedido',
+    name: 'DPedido',
+    component: () => import('../views/DPedido.vue')
+  },
+  {
+    path: '/rpedido',
+    name: 'RPedido',
+    component: () => import('../views/RPedido.vue')
+  },
 
   
 ]

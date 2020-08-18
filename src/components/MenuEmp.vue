@@ -77,12 +77,12 @@ export default {
             ],
             rec:[
                 { title: 'Inicio', icon: 'mdi-home', enlace:'/abienvenida' },
-                { title: 'Pedidos', icon: 'mdi-ballot', enlace:'/apedidos' },
+                { title: 'Pedidos', icon: 'mdi-ballot', enlace:'/rpedidos' },
                 { title: 'Repartidores', icon: 'mdi-motorbike', enlace:'/arepartidores' },
             ],
             rep:[
                 { title: 'Inicio', icon: 'mdi-home', enlace:'/abienvenida' },
-                { title: 'Pedidos', icon: 'mdi-ballot', enlace:'/apedidos' },
+                { title: 'Pedidos', icon: 'mdi-ballot', enlace:'/dpedidos' },
             ],
 
             permanent: true,

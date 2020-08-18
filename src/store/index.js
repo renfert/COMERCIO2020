@@ -19,6 +19,7 @@ export default new Vuex.Store({
     ],
     //USERS
     user: [], 
+    platosPedido: [],
     rol: '',
     userr: localStorage.getItem('u')
   },
