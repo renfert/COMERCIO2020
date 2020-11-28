@@ -36,16 +36,10 @@ export default new Vuex.Store({
     },
     asign_u(state, r){
       
-      if(r=="ROLE_CLIEN"){
-        localStorage.setItem("u",1)
-      }else if(r=="ROLE_ADMIN"){
+      if(r==1){
         localStorage.setItem("u",2)
-      }else if(r=="ROLE_DELIV"){
-        localStorage.setItem("u",4)
-      } else if(r=="ROLE_RECEP"){
+      }else{
         localStorage.setItem("u",3)
-      } else{
-        localStorage.setItem("u",0)
       }
     },
     llenar_DBextra(state,extraAction){

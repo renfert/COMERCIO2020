@@ -56,9 +56,9 @@ Vue.use(VueRouter)
     component: () => import('../views/APedidos.vue')
   },
   {
-    path: '/arecepcionistas',
-    name: 'ARecepcionistas',
-    component: () => import('../views/ARecepcionistas.vue')
+    path: '/admin',
+    name: 'Admin',
+    component: () => import('../views/Admin.vue')
   },
   {
     path: '/arepartidores',
@@ -95,7 +95,26 @@ Vue.use(VueRouter)
     name: 'RPedido',
     component: () => import('../views/RPedido.vue')
   },
-
+  {
+    path: '/candidatos',
+    name: 'Candidatos',
+    component: () => import('../views/candidatos.vue')
+  },
+  {
+    path: '/incidencias',
+    name: 'Incidencias',
+    component: () => import('../views/incidencias.vue')
+  },
+  {
+    path: '/propuestas',
+    name: 'Propuestas',
+    component: () => import('../views/propuestas.vue')
+  },
+  {
+    path: '/reportesPropuestas',
+    name: 'ReportesPropuestas',
+    component: () => import('../views/reportesPropuestas.vue')
+  },
   
 ]
 

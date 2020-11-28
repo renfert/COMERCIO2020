@@ -68,21 +68,18 @@ export default {
             
             ],
             admin:[
-                { title: 'Inicio', icon: 'mdi-home', enlace:'/abienvenida' },
-                { title: 'Platos', icon: 'mdi-silverware-fork-knife', enlace:'/aplatos' },
-                { title: 'Carta', icon: 'mdi-view-list', enlace:'/acarta' },
-                { title: 'Pedidos', icon: 'mdi-ballot', enlace:'/apedidos' },
-                { title: 'Recepcionistas', icon: 'mdi-account-details', enlace:'/arecepcionistas' },
-                { title: 'Repartidores', icon: 'mdi-motorbike', enlace:'/arepartidores' },
+                { title: 'Inicio', icon: 'mdi-home', enlace:'/admin' },
+                { title: 'Candidatos', icon: 'mdi-account-tie', enlace:'/candidatos' },
+                { title: 'Incidencias en campaña', icon: 'mdi-message-bulleted', enlace:'/incidencias' },
+                { title: 'Reportes de propuestas', icon: 'mdi-chart-bar', enlace:'/propuestas' },
+                { title: 'Estadísticas generales', icon: 'mdi-ballot', enlace:'/' },
             ],
             rec:[
                 { title: 'Inicio', icon: 'mdi-home', enlace:'/abienvenida' },
-                { title: 'Pedidos', icon: 'mdi-ballot', enlace:'/rpedidos' },
-                { title: 'Repartidores', icon: 'mdi-motorbike', enlace:'/arepartidores' },
-            ],
-            rep:[
-                { title: 'Inicio', icon: 'mdi-home', enlace:'/abienvenida' },
-                { title: 'Pedidos', icon: 'mdi-ballot', enlace:'/dpedidos' },
+                { title: 'Candidatos', icon: 'mdi-account-tie', enlace:'/candidatos' },
+                { title: 'Incidencias en campaña', icon: 'mdi-message-bulleted', enlace:'/incidencias' },
+                { title: 'Propuestas clasificadas', icon: 'mdi-chart-bar', enlace:'/propuestas' },
+
             ],
 
             permanent: true,

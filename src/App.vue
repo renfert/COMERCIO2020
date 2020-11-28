@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <Menu v-if="nav1" :user="userr" :isLogin="isLog"></Menu> 
+  <!--  <Menu v-if="nav1" :user="userr" :isLogin="isLog"></Menu> -->
     <MenuEmp v-if="!nav1" :user="userr" :isLogin="isLog"></MenuEmp>
     <v-content class="pa-0">
       <router-view/>

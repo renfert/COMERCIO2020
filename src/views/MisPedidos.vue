@@ -9,13 +9,7 @@
         <v-row class="ml-12 mb-4">
             <v-col>
                 <v-data-table :headers="headers" :items="pedido" class="elevation-1 ml-6 mr-6">
-                    <template v-slot:item.estado="{ item }">
-                        <v-chip :color="getColor(item.estado)" dark>{{ item.estadoD }}</v-chip>
-                    </template>
-                    <template v-slot:item.puntuacion="{ item }">
-                        <v-rating v-model="item.puntuacion" color="yellow darken-3" background-color="grey darken-1"
-                            empty-icon="$ratingFull" small ></v-rating>
-                    </template>
+                   
 
                 </v-data-table>
             </v-col>

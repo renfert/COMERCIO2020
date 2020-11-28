@@ -251,7 +251,7 @@
             <v-card>
                 <v-card-title align="center">¡Enhorabuena!</v-card-title>
                 <v-img src="../assets/estrella.png" height="150" contain></v-img>
-                <h2 align="center" class="mt-16 mb-16">Tu pedido ha sido satisfactoriamente registrado.</h2>
+                <h2 align="center" class="mt-16 mb-16 mr-5 ml-5">Tu pedido ha sido satisfactoriamente registrado.</h2>
                 <v-divider></v-divider>
                 <v-card-actions align="center" justify="center" class="ml-8" >
                         <v-btn align="center" color="info" class="ml-16"  dark @click="continuar">Ver mis pedidos</v-btn>

@@ -17,8 +17,8 @@ Vue.component('l-marker', LMarker);
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 Vue.use(VueAxios, axios)
-
-axios.defaults.baseURL='https://restaurant-backend-01.herokuapp.com/';
+//https://littlebigbackend2020.herokuapp.com/v1/user
+axios.defaults.baseURL='https://littlebigbackend2020.herokuapp.com/';
 
 const accessToken =localStorage.getItem('token')
 if(accessToken){
