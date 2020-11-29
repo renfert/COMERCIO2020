@@ -115,7 +115,22 @@ Vue.use(VueRouter)
     name: 'ReportesPropuestas',
     component: () => import('../views/reportesPropuestas.vue')
   },
+  {
+    path: '/listaPres',
+    name: 'ListaPres',
+    component: () => import('../views/listaPres.vue')
+  },
   
+  {
+    path: '/listaCong',
+    name: 'ListaCong',
+    component: () => import('../views/listaCong.vue')
+  },
+  {
+    path: '/nuevaInc',
+    name: 'NuevaInc',
+    component: () => import('../views/nuevaInc.vue')
+  },
 ]
 
 const router = new VueRouter({

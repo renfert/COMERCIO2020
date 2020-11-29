@@ -6,6 +6,7 @@
       <router-view/>
     </v-content>
     <Footer class="pa-0" ></Footer>
+    
   </v-app>
 </template>
 
@@ -73,7 +74,8 @@ export default {
     this.$root.$on('actMenu',() =>{
       this.userr=localStorage.getItem('u')
       this.isLog=true
-      this.mostrar_menu(this.userr)
+      this.mostrar_menu(this.userr);
+      this.$forceUpdate();
     })
   },
 };

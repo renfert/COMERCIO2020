@@ -20,14 +20,16 @@ REDES-->
                     </v-card>
             </v-dialog>
            <!--  <Menu></Menu> -->
-            <v-img src="../assets/bg_log2.jpg"  contain height="830" aspect-ratio="0.1" class="mt-0" style="background-position: inherit ;" id="fondo" >
+            <v-img src="../assets/bg_log2.jpg"  contain height="830" aspect-ratio="0.1" class="mt-0" id="fondo" >
+            
+            
             <v-row class="bg" justify="center" >
             <v-col xs="12" sm="4" md="4" lg="4">
             <v-row style="height:90px;"></v-row>
-                    <v-card class="mb-3 pa-3" style="background: rgba(255, 255, 255, 0.85); border-radius: 40px;">
+                    <v-card class="mb-3 pa-3" style="background: rgba(255, 255, 255, 0.90); border-radius: 40px;">
                         <v-form class="pa-8">
                             <!--<h2 align="center" class="mb-8" style="font-family: 'Yantramanav', sans-serif; color: #30336B"> Inicio de Sesión</h2>-->
-                            <v-img src="../assets/slogan1.png" align="center" contain height="80" aspect-ratio="0.1" class="ml-16" ></v-img>
+                            <v-img src="../assets/logoF.png" align="center" contain height="80" aspect-ratio="0.1" ></v-img>
                             <v-text-field label="DNI" v-model="dni" color="#30336B" class="mt-6 pa-4"> </v-text-field>
                             <v-text-field label="Contraseña" v-model="contr" color="#30336B" type="password" class="mb-6 pa-3" @keyup.enter="inicio" > </v-text-field>
                             <v-btn block color="#E04955" dark class="mb-8 rounded-pill" @click="inicio">Iniciar</v-btn>
@@ -49,6 +51,7 @@ REDES-->
 //import HelloWorld from '@/components/HelloWorld.vue'
 import axios from "axios";
 import {mapState, mapMutations, mapActions} from 'vuex';
+
 
 export default {
   name: 'Home',
@@ -83,6 +86,7 @@ export default {
                     this.asign_u(1)
                     this.$root.$emit('actMenu')
                     this.$router.push('/admin')
+                    
                     //this.$router.go(this.$router.currentRoute)
                     
                 } else{
@@ -96,14 +100,19 @@ export default {
                 this.dialog=true
                 console.log(error)
             }
-        }
+        },
+        
     },
+    
     
 }
 </script>
 
 <style>
-div .v-image__image{
+/*div .v-image__image--contain{
+background-position: inherit !important;
+}*/
+#fondo > div{
 background-position: inherit !important;
 }
 </style>

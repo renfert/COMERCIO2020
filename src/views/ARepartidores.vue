@@ -58,24 +58,6 @@
                 </v-toolbar>
             </template>
 
-            <template v-slot:item.puntuacion="{ item }">
-             <v-rating v-model="item.puntuacion" color="yellow darken-3" background-color="grey darken-1"
-                empty-icon="$ratingFull" small ></v-rating>
-            </template>
-
-            <template v-slot:item.photo="{ item }">
-              <v-img :src="item.photo" @click="editItem(item)"></v-img>
-            </template>
-
-
-            <template v-slot:item.actions="{ item }">
-                <v-icon small class="mr-2" @click="editItem(item)">
-                    mdi-pencil
-                </v-icon>
-                <v-icon small @click="deleteItem(item)">
-                    mdi-delete
-                </v-icon>
-                </template>
             <template v-slot:no-data>
                 <v-btn color="primary" @click="initialize">Reset</v-btn>
             </template>

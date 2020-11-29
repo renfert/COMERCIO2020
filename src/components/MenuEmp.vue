@@ -36,17 +36,6 @@
                         </v-list-item-content>
                     </v-list-item>
 
-                    <v-list-item link v-if="nuevos">
-                        <v-list-item-icon small >
-                            <v-badge color="green" content="2" >
-                                 <v-icon small>mdi-account-clock</v-icon>
-                            </v-badge>
-                            
-                        </v-list-item-icon>
-                        <v-list-item-content>
-                            <v-list-item-title>Pedidos nuevos</v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
                     
                     
                 </v-list>
@@ -88,7 +77,6 @@ export default {
             //Datos Usuario
             nombreEmp: '',
             rol: '',
-            nuevos: false,
             foto: ''
         }
     },
@@ -98,19 +86,12 @@ export default {
             if(n==2){
                 this.items = this.admin
                 this.rol="Administrador"
-                this.nuevos=false
                 this.foto="https://randomuser.me/api/portraits/men/81.jpg"
             } else if(n==3){
                 this.items = this.rec
-                this.rol="Recepcionista"
-                this.nuevos=true
-                this.foto="https://randomuser.me/api/portraits/women/17.jpg"
-            } else if(n==4){
-                this.items = this.rep
-                this.rol="Repartidor"
-                this.nuevos=true
-                this.foto="https://randomuser.me/api/portraits/men/22.jpg"
-            }
+                this.rol="Ciudadano"
+                this.foto="https://randomuser.me/api/portraits/women/5.jpg"
+            } 
         },
         async obtenerNombre(){
            try{
