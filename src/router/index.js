@@ -118,13 +118,13 @@ Vue.use(VueRouter)
   {
     path: '/listaPres',
     name: 'ListaPres',
-    component: () => import('../views/listaPres.vue')
+    component: () => import('../views/listaCong.vue')
   },
   
   {
     path: '/listaCong',
     name: 'ListaCong',
-    component: () => import('../views/listaCong.vue')
+    component: () => import('../views/listaPres.vue')
   },
   {
     path: '/nuevaInc',

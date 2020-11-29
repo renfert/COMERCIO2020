@@ -19,10 +19,10 @@
         <v-img src="../assets/logoF3.png" align="center" contain height="110" aspect-ratio="0.1" class="mt-10"></v-img>
         
         
-        <Mision class="ml-2"></Mision>
+        <Mision ></Mision>
 
         <!-- Hover button-->
-        <v-row class="fill-height ml-8 mb-5" align="center" justify="center" v-if="btnem" > 
+        <v-row class="fill-height ml-8 mb-10 mt-16" align="center" justify="center" v-if="btnem" > 
             <template v-for="(item, i) in items" >
                 <v-col :key="i" cols="12" md="2" id="subm">
                     <v-hover v-slot:default="{ hover }">

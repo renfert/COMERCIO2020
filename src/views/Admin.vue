@@ -13,12 +13,22 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
+         <v-img src="../assets/logoF3.png" align="center" contain height="110" aspect-ratio="0.1" class="mt-10"></v-img>
+        
+        
+        <Mision ></Mision>
+
     </v-container>
 </template>
 
 <script>
+import Mision from '../components/Mision';
+
 export default {
     name:'Admin',
+    components:{
+        Mision
+    },
     data(){
         return{
             dialog: true,

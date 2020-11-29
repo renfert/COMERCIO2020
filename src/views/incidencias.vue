@@ -1,6 +1,8 @@
 <template>
-    <v-container>
-        <v-btn @click="ir">Reportar nueva</v-btn>
+    <v-container class="mt-10">
+        <v-btn @click="ir" color="success" rounded>
+            <v-icon class="mr-2"> mdi-plus </v-icon>
+             Reportar nueva</v-btn>
     </v-container>
 </template>
 

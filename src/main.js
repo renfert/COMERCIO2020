@@ -7,6 +7,8 @@ import 'roboto-fontface/css/roboto/roboto-fontface.css'
 import '@mdi/font/css/materialdesignicons.css'
 import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
 import 'leaflet/dist/leaflet.css';
+import Vuesax from 'vuesax'
+import 'vuesax/dist/vuesax.css' //Vuesax styles
 import { Icon } from 'leaflet';
 
 Vue.component('l-map', LMap);
@@ -16,9 +18,12 @@ Vue.component('l-marker', LMarker);
 //AXIOS
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+Vue.use(Vuesax, {
+  // options here
+})
 Vue.use(VueAxios, axios)
-//https://littlebigbackend2020.herokuapp.com/v1/user
-axios.defaults.baseURL='https://littlebigbackend2020.herokuapp.com/';
+//https://littlebigbackend2020.herokuapp.com/
+axios.defaults.baseURL='http://192.168.1.21:8080/';
 
 const accessToken =localStorage.getItem('token')
 if(accessToken){
