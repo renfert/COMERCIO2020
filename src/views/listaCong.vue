@@ -48,7 +48,7 @@
             >
             <v-avatar absolute right top  size="70" style="border-solid: white;">
                 <img
-                  :src="getImgUrl(1)"
+                  :src="getImgUrl(card.num)"
                   :alt=card.name
                 />
               </v-avatar>
@@ -56,15 +56,15 @@
             <!--
                 -->
             <v-list-item-content id="estiloInf" style="ml-4 mr-4">
-              <div class="overline mb-4">DNI: {{card.dni}}</div>
+              <div class="overline mb-4">AÑO: {{card.año}}</div>
               
               <v-list-item-title class="headline mb-1 secondary--text">
-                {{card.name}}
+                {{card.nombre}}
               </v-list-item-title>
               <v-list-item-subtitle
                 style="margin-left: 15px; margin-right: 20px"
-                >Carrera: {{card.carrera}} 
-                Nivel: {{card.nivel}}</v-list-item-subtitle
+                >Carrera: {{card.partidoPolitico}} 
+                Nivel: {{card.sexo}}</v-list-item-subtitle
               >
             </v-list-item-content>
             <v-card-actions class="white justify-center">
@@ -137,11 +137,7 @@ export default {
     },
     async obtenerLista(){
            try{
-            const candDB = await this.axios.get('v1/candidato',{
-    params: {
-      _limit: 10
-     }
-  })
+            const candDB = await this.axios.get('v1/postulacion')
      /*       await platosDB.data.forEach(element => {
                    let ite = {}
                    ite.id = element.id;
@@ -149,9 +145,20 @@ export default {
                    ite.unitPrice = element.unitPrice;
                    ite.categoryID = element.category.id;
                    this.cards.push(ite)
-            });
-            */
+            });*/
+            
+           await candDB.data.forEach(element => {
+                   let ite = {}
+                   ite.año = element.año;
+                   ite.nombre=element.candidato.nombre;
+                   ite.sexo= element.candidato.sexo;
+                   ite.partidoPolitico=element.partidoPolitico.nombre;
+                   ite.num=element.partidoPolitico.id;
+                   this.cards.push(ite)
+            }); 
+            
            console.log(candDB);
+           console.log(this.cards);
            }catch(error){
                console.log(error);
            }

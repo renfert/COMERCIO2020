@@ -47,7 +47,7 @@
             >
             <v-avatar absolute right top  size="70" style="border-solid: white;">
                 <img
-                  :src="getImgUrl(1)"
+                  :src="getImgUrl(2)"
                   :alt=card.name
                 />
               </v-avatar>
@@ -84,7 +84,9 @@
           </v-card>
         </v-col>
       </v-row>
-      <v-btn @click="mostrarMas()">Continuar</v-btn>
+     <v-btn @click="mostrarMas(page--)">ANTERIOR</v-btn>
+    <v-btn @click="mostrarMas(page++)">SIGUIENTE</v-btn>
+    
     </v-container>
 
     <v-row style="height: 100px"></v-row>
@@ -100,6 +102,7 @@ export default {
   data() {
     return {
       nombreCand: "",
+      page: 1,
       cards: [],
       socials: [
         {
@@ -136,13 +139,13 @@ export default {
     limpiar(value){
         return value.replace(/<?li>/g," ")
     },
-    async mostrarMas(){
+    async mostrarMas(param){
       this.cards= [];
            try{
             //const candDB = await this.axios.get('v1/candidato?max=10&min=1')
             //const candDB = await this.axios.get('v1/candidato?max=10&min=1&nombre=Sara')
 
-            const candDB = await this.axios.get('v1/candidato?max=10&min=2')
+            const candDB = await this.axios.get(`v1/candidato?max=10&min=${param}`)
 
           await candDB.data.forEach(element => {
                    let ite = {}
